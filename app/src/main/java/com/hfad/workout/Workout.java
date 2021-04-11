@@ -8,7 +8,7 @@ public class Workout {
             new Workout("The Limb Loosener",
                     "5 Handstand push-ups\n10 1-legged squats\n15 Pull-ups"),
             new Workout("Core Agony",
-                    "100 Pull-ups\n100 Push-up\n100 Sit-ups\nn100 Squats"),
+                    "100 Pull-ups\n100 Push-up\n100 Sit-ups\n100 Squats"),
             new Workout("The Wimp Special",
                     "5 Pull-Ups\n10 1 Push-ups\n15 Squats"),
             new Workout("Strength and Length",
