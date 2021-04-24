@@ -3,13 +3,15 @@ package com.hfad.workout;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import java.util.Locale;
 
-public class StopwatchFragment extends Fragment {
+public class StopwatchFragment extends Fragment implements View.OnClickListener{
     //Number of seconds displayed on the stopwatch.
     private int seconds = 0;
     //Is the stopwatch running?
@@ -32,7 +34,30 @@ public class StopwatchFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_stopwatch, container, false);
         runTimer(layout);
+        Button startButton = layout.findViewById(R.id.start_button);
+        startButton.setOnClickListener(this);
+        Button stopButton  = layout.findViewById(R.id.stop_button);
+        stopButton.setOnClickListener(this);
+        Button resetButton = layout.findViewById(R.id.reset_button);
+        resetButton.setOnClickListener(this);
         return layout;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.start_button:
+                onClickStart();
+                break;
+
+            case R.id.stop_button:
+                onClickStop();
+                break;
+
+            case R.id.reset_button:
+                onClickReset();
+                break;
+        }
     }
 
     @Override
@@ -57,35 +82,33 @@ public class StopwatchFragment extends Fragment {
         savedInstanceState.putBoolean("wasRunning", wasRunning);
     }
 
-    public void onClickStart(View view) {
+    private void onClickStart() {
         running = true;
     }
 
-    public void onClickStop(View view) {
+    private void onClickStop() {
         running = false;
-        seconds = 0;
     }
 
-    public void onClickReset(View view) {
+    private void onClickReset() {
         running = false;
         seconds = 0;
     }
 
     private void runTimer(View view) {
-        final TextView timeView = (TextView) view.findViewById(R.id.time_view);
-        final Handler handler = new Handler();
+        final TextView timeView = view.findViewById(R.id.time_view);
+        final Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
-                int hours = seconds/3600;
-                int minutes = (seconds%3600)/60;
-                int secs = seconds%60;
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3600) / 60;
+                int secs = seconds % 60;
                 String time = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, secs);
                 timeView.setText(time);
                 if (running) {
                     seconds++;
                 }
-
                 handler.postDelayed(this, 1000);
             }
         });

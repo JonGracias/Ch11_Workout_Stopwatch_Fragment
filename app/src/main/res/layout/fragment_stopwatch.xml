@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:onClick="onClickStart"
         android:text="@string/start"/>
 
     <Button
@@ -29,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="onClickStop"
         android:text="@string/stop"/>
 
     <Button
@@ -38,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="onClickReset"
         android:text="@string/reset"/>
 
 </LinearLayout>
