@@ -1,6 +1,8 @@
 package com.hfad.workout;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +23,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
             wasRunning = savedInstanceState.getBoolean("wasRunning");
@@ -76,7 +78,8 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
         savedInstanceState.putBoolean("wasRunning", wasRunning);
@@ -101,13 +104,17 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener{
         handler.post(new Runnable() {
             @Override
             public void run() {
+
+
                 int hours = seconds / 3600;
                 int minutes = (seconds % 3600) / 60;
                 int secs = seconds % 60;
-                String time = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, secs);
+                String time = String.format(Locale.getDefault(),
+                        "%d:%02d:%02d", hours, minutes, secs);
                 timeView.setText(time);
                 if (running) {
                     seconds++;
+
                 }
                 handler.postDelayed(this, 1000);
             }
